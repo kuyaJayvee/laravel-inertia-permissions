@@ -27,6 +27,7 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', function () {
+    auth()->user()->assignRole('admin');
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
