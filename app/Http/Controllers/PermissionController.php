@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CreatePermissionsRequest;
 use Inertia\Inertia;
 use Inertia\Response;
 use Illuminate\Http\Request;
@@ -25,15 +26,16 @@ class PermissionController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Admin/Permissions/Create');
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(CreatePermissionsRequest $request)
     {
-        //
+        Permission::create(['name' => $request->name]);
+        return to_route('permissions.index');
     }
 
     /**
@@ -49,15 +51,22 @@ class PermissionController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $permission = Permission::findById($id);
+
+        return Inertia::render('Admin/Permissions/Edit', [
+          'permission' => $permission
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(CreatePermissionsRequest $request, string $id)
     {
-        //
+        $permission = Permission::findById($id);
+        $permission->update($request->validated());
+
+        return to_route('permissions.index');
     }
 
     /**
@@ -65,6 +74,7 @@ class PermissionController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $permission = Permission::findById($id);
+        $permission->delete();
     }
 }

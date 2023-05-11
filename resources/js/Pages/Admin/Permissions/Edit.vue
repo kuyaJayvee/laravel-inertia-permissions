@@ -5,24 +5,33 @@ import InputLabel from '@/Components/InputLabel.vue'
 import TextInput from '@/Components/TextInput.vue'
 import InputError from '@/Components/InputError.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
+import Modal from '@/Components/Modal.vue';
+
+const props = defineProps({
+    permission: {
+        type: Object,
+        required: true
+    }
+})
 
 const form = useForm({
-    name: ''
+    name: props.permission.name
 })
+
 </script>
 
 <template>
-    <Head title="Create new roles" />
+    <Head title="Update Permission" />
 
     <AdminLayoutVue>
         <div class="max-w-7xl mx-auto py-4">
             <div class="flex justify-between">
-                <h1>Create new role</h1>
+                <h1>Update Permission</h1>
                 <Link :href="route('roles.index')"
                     class="text-white font-semibold bg-indigo-500 hover:bg-indigo-700 rounded p-3">Back</Link>
             </div>
             <div class="mt-6 max-w-md mx-auto bg-slate-100 shadow-lg rounded-lg p-3">
-                <form @submit.prevent="form.post(route('roles.store'))">
+                <form @submit.prevent="form.put(route('permissions.update', permission.id))">
                     <div>
                         <InputLabel for="name" value="Name" />
 
@@ -32,12 +41,18 @@ const form = useForm({
                         <InputError class="mt-2" :message="form.errors.name" />
                     </div>
                     <div class="flex items-center mt-4">
-                        <PrimaryButton class="bg-slate-900 text-white px-5 font-semibold py-2 rounded cursor-pointer"  :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
-                            Create
+                        <PrimaryButton class="bg-slate-900 text-white px-5 font-semibold py-2 rounded cursor-pointer"
+                            :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
+                            Update
                         </PrimaryButton>
                     </div>
                 </form>
             </div>
         </div>
+        <Modal :show="true">
+            <div>
+                Hello
+            </div>
+        </Modal>
     </AdminLayoutVue>
 </template>
