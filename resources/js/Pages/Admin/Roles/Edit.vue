@@ -5,17 +5,19 @@ import InputLabel from '@/Components/InputLabel.vue'
 import TextInput from '@/Components/TextInput.vue'
 import InputError from '@/Components/InputError.vue';
 import PrimaryButton from '@/Components/PrimaryButton.vue';
-import Modal from '@/Components/Modal.vue';
+import VueMultiselect from 'vue-multiselect'
 
 const props = defineProps({
     role: {
         type: Object,
         required: true
-    }
+    },
+    permissions: Array
 })
 
 const form = useForm({
-    name: props.role.name
+    name: props.role.name,
+    permissions: []
 })
 
 </script>
@@ -40,6 +42,11 @@ const form = useForm({
 
                         <InputError class="mt-2" :message="form.errors.name" />
                     </div>
+                    <div class="mt-4">
+                        <InputLabel for="name" value="Permissions" />
+                        <VueMultiselect v-model="form.permissions" :options="permissions" :multiple="true" :close-on-select="true"
+                            placeholder="List of Permissions" label="name" track-by="name" />
+                    </div>
                     <div class="flex items-center mt-4">
                         <PrimaryButton class="bg-slate-900 text-white px-5 font-semibold py-2 rounded cursor-pointer"
                             :class="{ 'opacity-25': form.processing }" :disabled="form.processing">
@@ -51,3 +58,5 @@ const form = useForm({
         </div>
     </AdminLayoutVue>
 </template>
+
+<style src="vue-multiselect/dist/vue-multiselect.css"></style>
