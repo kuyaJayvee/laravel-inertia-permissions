@@ -10,13 +10,13 @@ defineProps(['users'])
 </script>
 
 <template>
-    <Head title="Dashboard" />
+    <Head title="Users" />
 
     <AdminLayoutVue>
         <div class="max-w-7xl mx-auto py-4">
             <div class="flex justify-between">
                 <h1>Users Index Page</h1>
-                <Link class="text-white font-semibold bg-indigo-500 hover:bg-indigo-700 rounded p-3">New Permission</Link>
+                <Link :href="route('users.create')" class="text-white font-semibold bg-indigo-500 hover:bg-indigo-700 rounded p-3">New Users</Link>
             </div>
             <div class="mt-6">
                 <Table>
@@ -33,7 +33,10 @@ defineProps(['users'])
                             <TableDataCell>{{ user.id }}</TableDataCell>
                             <TableDataCell>{{ user.name }}</TableDataCell>
                             <TableDataCell>{{ user.email }}</TableDataCell>
-                            <TableDataCell>Edit/Delete</TableDataCell>
+                            <TableDataCell>
+                                <Link :href="route('users.edit', user.id)" class="text-green-400 hover:text-green-600 mr-5">Edit</Link>
+                                <Link :href="route('users.destroy', user.id)" method="DELETE" as="button" class="text-red-400 hover:text-red-600 mr-5">Delete</Link>
+                            </TableDataCell>
                         </TableRow>
                     </template>
                 </Table>

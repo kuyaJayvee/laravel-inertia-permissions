@@ -49,10 +49,5 @@ const form = useForm({
                 </form>
             </div>
         </div>
-        <Modal :show="true">
-            <div>
-                Hello
-            </div>
-        </Modal>
     </AdminLayoutVue>
 </template>
