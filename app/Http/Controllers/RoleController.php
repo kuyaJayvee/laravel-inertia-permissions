@@ -16,7 +16,7 @@ class RoleController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index():Response
+    public function index(): Response
     {
         return Inertia::render('Admin/Roles/RoleIndex', [
             'roles' => RoleResource::collection(Role::all())
@@ -26,7 +26,7 @@ class RoleController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create() : Response
+    public function create(): Response
     {
         return Inertia::render('Admin/Roles/Create');
     }
@@ -55,10 +55,11 @@ class RoleController extends Controller
     public function edit(string $id)
     {
         $role = Role::findById($id);
+        $role->load('permissions');
 
         return Inertia::render('Admin/Roles/Edit', [
-           'role' => new RoleResource($role),
-           'permissions' => PermissionResource::collection(Permission::all())
+            'role' => new RoleResource($role),
+            'permissions' => PermissionResource::collection(Permission::all())
         ]);
     }
 
@@ -72,7 +73,7 @@ class RoleController extends Controller
             'name' => $request->name,
         ]);
         $role->syncPermissions($request->input('permissions.*.name'));
-        return to_route('roles.index');
+        return back();
     }
 
     /**
